@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.walletBussinessMqMsgPOMapper">
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.walletBussinessMqMsgPO">
+    <id column="msg_id" jdbcType="BIGINT" property="msgId" />
+    <result column="msg_clazz_type" jdbcType="VARCHAR" property="msgClazzType" />
+    <result column="exp_code" jdbcType="INTEGER" property="expCode" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="last_modify_time" jdbcType="BIGINT" property="lastModifyTime" />
+    <result column="bussiness_type" jdbcType="VARCHAR" property="bussinessType" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.blockchain.wallet.api.po.walletBussinessMqMsgPOWithBLOBs">
+    <result column="msg_content" jdbcType="LONGVARCHAR" property="msgContent" />
+    <result column="exp_desc" jdbcType="LONGVARCHAR" property="expDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    msg_id, msg_clazz_type, exp_code, create_time, last_modify_time, bussiness_type, 
+    state
+  </sql>
+  <sql id="Blob_Column_List">
+    msg_content, exp_desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wallet_bussiness_mq_msg
+    where msg_id = #{msgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wallet_bussiness_mq_msg
+    where msg_id = #{msgId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.blockchain.wallet.api.po.walletBussinessMqMsgPOWithBLOBs">
+    insert into wallet_bussiness_mq_msg (msg_id, msg_clazz_type, exp_code, 
+      create_time, last_modify_time, bussiness_type, 
+      state, msg_content, exp_desc
+      )
+    values (#{msgId,jdbcType=BIGINT}, #{msgClazzType,jdbcType=VARCHAR}, #{expCode,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=BIGINT}, #{lastModifyTime,jdbcType=BIGINT}, #{bussinessType,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{msgContent,jdbcType=LONGVARCHAR}, #{expDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.walletBussinessMqMsgPOWithBLOBs">
+    insert into wallet_bussiness_mq_msg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="msgId != null">
+        msg_id,
+      </if>
+      <if test="msgClazzType != null">
+        msg_clazz_type,
+      </if>
+      <if test="expCode != null">
+        exp_code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="bussinessType != null">
+        bussiness_type,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="msgContent != null">
+        msg_content,
+      </if>
+      <if test="expDesc != null">
+        exp_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="msgId != null">
+        #{msgId,jdbcType=BIGINT},
+      </if>
+      <if test="msgClazzType != null">
+        #{msgClazzType,jdbcType=VARCHAR},
+      </if>
+      <if test="expCode != null">
+        #{expCode,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="bussinessType != null">
+        #{bussinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null">
+        #{msgContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="expDesc != null">
+        #{expDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.walletBussinessMqMsgPOWithBLOBs">
+    update wallet_bussiness_mq_msg
+    <set>
+      <if test="msgClazzType != null">
+        msg_clazz_type = #{msgClazzType,jdbcType=VARCHAR},
+      </if>
+      <if test="expCode != null">
+        exp_code = #{expCode,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="bussinessType != null">
+        bussiness_type = #{bussinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null">
+        msg_content = #{msgContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="expDesc != null">
+        exp_desc = #{expDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where msg_id = #{msgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.blockchain.wallet.api.po.walletBussinessMqMsgPOWithBLOBs">
+    update wallet_bussiness_mq_msg
+    set msg_clazz_type = #{msgClazzType,jdbcType=VARCHAR},
+      exp_code = #{expCode,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      bussiness_type = #{bussinessType,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      msg_content = #{msgContent,jdbcType=LONGVARCHAR},
+      exp_desc = #{expDesc,jdbcType=LONGVARCHAR}
+    where msg_id = #{msgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.walletBussinessMqMsgPO">
+    update wallet_bussiness_mq_msg
+    set msg_clazz_type = #{msgClazzType,jdbcType=VARCHAR},
+      exp_code = #{expCode,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      bussiness_type = #{bussinessType,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where msg_id = #{msgId,jdbcType=BIGINT}
+  </update>
+</mapper>

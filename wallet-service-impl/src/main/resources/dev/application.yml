@@ -1,0 +1,188 @@
+server:
+  port: 7077
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ./logs
+      pattern: "%{X-Forwarded-For}i %a %{X-B3-TraceId}i %t %m %U %s %b %D"
+      rename-on-rotate: true
+      suffix: .log
+      prefix: access
+      rotate: true
+      buffered: false
+      file-date-format: yyyy-MM-dd
+    accept-count: 500
+    max-connections: 800
+    min-spare-threads: 20
+    max-threads: 200
+
+logging:
+  config: classpath:logback.xml
+  level:
+    com:
+      blockchain:
+        wallet:
+          api: debug
+
+spring:
+  rabbitmq:
+    host: 47.104.203.101
+    port: 5672
+    username: admin
+    password: admin
+    #virtualHost: /wallet-bussiness-mq
+    publisher-confirms: true
+    publisher-returns: false
+    connection-timeout: 5000
+  datasource:
+    druid:
+    #jdbc 配置
+    url: jdbc:mysql://47.105.100.121:3306/wallet_db?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: hk888888
+    driver-class-name: com.mysql.jdbc.Driver
+    # 连接池配置
+    initial-size: 2
+    max-active: 20
+    min-idle: 2
+    # 获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，如果需要可以通过配置useUnfairLock属性为true使用非公平锁。
+    max-wait: 60000
+    # 如果有initialSize数量较多时，打开会加快应用启动时间
+    asyncInit: true
+    pool-prepared-statements: false
+    max-open-prepared-statements: -1
+    validation-query: select 'x'
+    validation-query-timeout: 300
+    test-on-borrow: false
+    test-on-return: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    max-evictable-idle-time-millis: 600000
+    #配置多个英文逗号分隔监控统计用的filter:stat
+          #           日志用的filter:log4j
+          #           防御sql注入的filter:wall
+    filters: stat,wall,log4j
+
+          # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+    web-stat-filter:
+          #是否启用StatFilter默认值true
+      enabled: true
+      url-pattern: /*
+      exclusions: '/*.js,/*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      session-stat-enable: false
+      session-stat-max-count: 2000
+      principal-session-name: walletApi
+      profile-enable: false
+
+    # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+    #是否启用StatViewServlet默认值true
+    stat-view-servlet:
+      enabled: true
+      url-pattern: /druid/*
+      reset-enable: false
+      login-username: admin
+      login-password: admin
+      allow: 192.168.2.1/88
+      deny:
+
+  dubbo:
+    application:
+      name: wallet-api-provider
+    base-package: com.blockchain.wallet.api.provider
+    registry:
+      protocol: zookeeper
+      # 必填 服务发现 注册中心服务器地址，如果地址没有端口缺省为9090，同一集群内的多个地址用逗号分隔，如：ip:port,ip:port，不同集群的注册中心，请配置多个spring.dubbo.registry.标签 1.0.16以上版本
+      address: zookeeper://192.168.2.3:2181
+      #address: zookeeper://127.0.0.1:6379
+      client: curator
+    protocol:
+      port: 20880
+      name: dubbo
+      serialization: kryo
+      transporter: netty4
+      threadpool: fixed
+      threads: 100
+    provider:
+      timeout: 3000
+      retries: 2
+      version: 1.0.0
+      group: open-api
+
+  redis:
+    database: 0               # Redis数据库索引（默认为0）
+    host: 47.104.203.101      # Redis服务器地址
+    port: 6379                # Redis服务器连接端口
+    password: Hk888888        # Redis服务器连接密码（默认为空）
+    usdtSet: usdt
+    minaddress: 100
+    pool:
+      max-active: 8       # 连接池最大连接数（使用负值表示没有限制）
+      max-wait: -1        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-idle: 100       # 连接池中的最大空闲连接
+      min-idle: 10        # 连接池中的最小空闲连接
+    timeout: 10000        # 连接超时时间（毫秒）
+
+  mail:
+   host: smtp.163.com    #Email配置
+   username: 18765287613@163.com
+   password: 19920310zk
+   properties:
+    mail:
+     smtp:
+       auth: true
+       timeout: 25000
+
+  usdt:
+   propertyid: 31
+   username: zk
+   password: zk
+   url: http://47.105.119.36:18443
+   withdrawmin: 10    #usdt提现最少金额
+   withdrawmax: 10000 #usdt提现最大金额
+   combinelimit: 50   #用户超过50个usdt,自动归并到冷钱包
+
+
+mybatis:
+  mapper-locations: classpath:com/blockchain/wallet/api/dao/**/*Mapper.xml
+  type-aliases-package: com.blockchain.wallet.api.po
+  config-location: classpath:mybatis-config.xml
+
+
+wallet:
+  workerId: 10
+  datacenterId: 10
+  btcoin:
+    env: prod
+    url:
+  bill:
+    recharge:
+      queue: WALLET.BILL.RECHARGE_BILL_QUEUE_MSG
+      exchange: WALLET.BILL.RECHARGE_BILL_EXCHANGE
+      routeKey: WALLET.BILL.RECHARGE_BILL_QUEUE_MSG
+    withdraw:
+      queue: WALLET.BILL.WITHDRAW_BILL_QUEUE_MSG
+      exchange: WALLET.BILL.WITHDRAW_BILL_EXCHANGE
+      routeKey: WALLET.BILL.WITHDRAW_BILL_QUEUE_MSG
+      # 提现通知消息
+    withdrawNotify:
+      queue: WALLET.BILL.WITHDRAW_BILL_QUEUE_NOTIFY_MSG
+      exchange: WALLET.BILL.WITHDRAW_BILL_NOTIFY_EXCHANGE
+      routeKey: WALLET.BILL.WITHDRAW_BILL_NOTIFY_QUEUE_MSG
+     #客户钱包充值扫块通知
+    rechargeNotify:
+      queue: WALLET.BILL.RECHARGE_NOTIFY_BILL_QUEUE_MSG
+      exchange: WALLET.BILL.RECHARGE_NOTIFY_BILL_EXCHANGE
+      routeKey: WALLET.BILL.RECHARGE_NOTIFY_BILL_QUEUE_MSG
+      #扫块信息
+    blockScan:
+      queue: WALLET.BILL.BLOCKSCAN_BILL_QUEUE_MSG
+      exchange: WALLET.BILL.BLOCKSCAN_BILL_EXCHANGE
+      routeKey: WALLET.BILL.BLOCKSCAN_BILL_QUEUE_MSG
+
+job:
+  zk:
+    serverLists: 192.168.2.3:2181
+    namespace: wallet_bussiness_job_groups
+
+

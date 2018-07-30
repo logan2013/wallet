@@ -1,0 +1,87 @@
+#server
+server:
+  port: 7070
+  #servlet-path: /wallet-api
+  servlet:
+    contextPath: /wallet-api
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: ./logs
+      pattern: "%{X-Forwarded-For}i %a %{X-B3-TraceId}i %t %m %U %s %b %D"
+      rename-on-rotate: true
+      suffix: .log
+      prefix: access
+      rotate: true
+      buffered: false
+      file-date-format: yyyy-MM-dd
+    accept-count: 500
+    max-connections: 800
+    min-spare-threads: 20
+    max-threads: 200
+
+logging:
+  config: classpath:logback.xml
+  level:
+    com:
+      blockchain:
+        wallet:
+          api: debug
+
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+  dubbo:
+    application:
+      name: wallet-api-consumer
+    base-package: com.blockchain.wallet.api.consumer  # dubbo服务调用者所在的包
+    registry:
+      protocol: zookeeper
+      # 必填 服务发现 注册中心服务器地址，如果地址没有端口缺省为9090，同一集群内的多个地址用逗号分隔，如：ip:port,ip:port，不同集群的注册中心，请配置多个spring.dubbo.registry.标签 1.0.16以上版本
+      address: zookeeper://192.168.2.3:2181
+      #address: zookeeper://127.0.0.1:2181
+      client: curator
+    protocol:
+      name: dubbo
+      threadpool: fixed
+      threads: 100
+      serialization: kryo
+      transporter: netty4
+      port: 20880
+    consumer:
+      timeout: 1000
+      check: true                          # 服务启动时检查被调用服务是否可用
+      retries: 2                           # 服务调用重试次数
+      version: 1.0.0
+      group: open-api
+
+  redis:
+    database: 0               # Redis数据库索引（默认为0）
+    host: 47.104.203.101      # Redis服务器地址
+    port: 6379                # Redis服务器连接端口
+    password: Hk888888        # Redis服务器连接密码（默认为空）
+    pool:
+      max-active: 8       # 连接池最大连接数（使用负值表示没有限制）
+      max-wait: -1        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-idle: 100       # 连接池中的最大空闲连接
+      min-idle: 10        # 连接池中的最小空闲连接
+    timeout: 10000        # 连接超时时间（毫秒）
+
+
+authentication:
+  enable: false
+  ipAllows:
+  - 192.168.2.3
+  - 127.0.0.1
+  ipDenys:
+  - 192.168.2.100
+
+
+
+
+
+

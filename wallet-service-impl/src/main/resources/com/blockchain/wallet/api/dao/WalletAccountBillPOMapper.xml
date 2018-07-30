@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.WalletAccountBillPOMapper">
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.WalletAccountBillPO">
+    <id column="bill_id" jdbcType="BIGINT" property="billId" />
+    <result column="wallet_id" jdbcType="BIGINT" property="walletId" />
+    <result column="txid" jdbcType="VARCHAR" property="txid" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="biz_type" jdbcType="VARCHAR" property="bizType" />
+    <result column="order_amount" jdbcType="BIGINT" property="orderAmount" />
+    <result column="before_balance" jdbcType="BIGINT" property="beforeBalance" />
+    <result column="balance_" jdbcType="BIGINT" property="balance" />
+    <result column="flow_type" jdbcType="VARCHAR" property="flowType" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="last_modify_time" jdbcType="BIGINT" property="lastModifyTime" />
+    <result column="source_" jdbcType="VARCHAR" property="source" />
+    <result column="block_txid" jdbcType="VARCHAR" property="blockTxid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bill_id, wallet_id, txid, order_no, biz_type, order_amount, before_balance, balance_, 
+    flow_type, account_type, create_time, last_modify_time, source_, block_txid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_account_bill
+    where bill_id = #{billId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wallet_account_bill
+    where bill_id = #{billId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.blockchain.wallet.api.po.WalletAccountBillPO">
+    insert into wallet_account_bill (bill_id, wallet_id, txid, 
+      order_no, biz_type, order_amount, 
+      before_balance, balance_, flow_type, 
+      account_type, create_time, last_modify_time, 
+      source_, block_txid)
+    values (#{billId,jdbcType=BIGINT}, #{walletId,jdbcType=BIGINT}, #{txid,jdbcType=VARCHAR},
+      #{orderNo,jdbcType=VARCHAR}, #{bizType,jdbcType=VARCHAR}, #{orderAmount,jdbcType=BIGINT}, 
+      #{beforeBalance,jdbcType=BIGINT}, #{balance,jdbcType=BIGINT}, #{flowType,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{lastModifyTime,jdbcType=BIGINT}, 
+      #{source,jdbcType=VARCHAR}, #{blockTxid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.WalletAccountBillPO">
+    insert into wallet_account_bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="billId != null">
+        bill_id,
+      </if>
+      <if test="walletId != null">
+        wallet_id,
+      </if>
+      <if test="txid != null">
+        txid,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="bizType != null">
+        biz_type,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+      <if test="beforeBalance != null">
+        before_balance,
+      </if>
+      <if test="balance != null">
+        balance_,
+      </if>
+      <if test="flowType != null">
+        flow_type,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="source != null">
+        source_,
+      </if>
+      <if test="blockTxid != null">
+        block_txid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="billId != null">
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="walletId != null">
+        #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="txid != null">
+        #{txid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null">
+        #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=BIGINT},
+      </if>
+      <if test="beforeBalance != null">
+        #{beforeBalance,jdbcType=BIGINT},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="flowType != null">
+        #{flowType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="blockTxid != null">
+        #{blockTxid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.WalletAccountBillPO">
+    update wallet_account_bill
+    <set>
+      <if test="walletId != null">
+        wallet_id = #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="txid != null">
+        txid = #{txid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null">
+        biz_type = #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=BIGINT},
+      </if>
+      <if test="beforeBalance != null">
+        before_balance = #{beforeBalance,jdbcType=BIGINT},
+      </if>
+      <if test="balance != null">
+        balance_ = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="flowType != null">
+        flow_type = #{flowType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="source != null">
+        source_ = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="blockTxid != null">
+        block_txid = #{blockTxid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bill_id = #{billId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.WalletAccountBillPO">
+    update wallet_account_bill
+    set wallet_id = #{walletId,jdbcType=BIGINT},
+      txid = #{txid,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      biz_type = #{bizType,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=BIGINT},
+      before_balance = #{beforeBalance,jdbcType=BIGINT},
+      balance_ = #{balance,jdbcType=BIGINT},
+      flow_type = #{flowType,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      source_ = #{source,jdbcType=VARCHAR},
+      block_txid = #{blockTxid,jdbcType=VARCHAR}
+    where bill_id = #{billId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectWalletAccBillByPo"  resultType="java.lang.Integer">
+    select
+    count(1)
+    from wallet_account_bill a, wallet_account b where a.wallet_id = b.wallet_id
+      and b.user_name = #{userName}
+      and b.account_type = #{accountType}
+      and b.wallet_address_hash = #{walletAddressHash}
+      and a.order_no = #{orderNo}
+  </select>
+
+
+  <select id="selectByBlockId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wallet_account_bill
+    where block_txid = #{blockTxid,jdbcType=VARCHAR}
+  </select>
+
+
+
+</mapper>

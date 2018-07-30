@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.walletPlatformEntryMapper">
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.walletPlatformEntry">
+    <id column="entry_id" jdbcType="INTEGER" property="entryId" />
+    <result column="wallet_id" jdbcType="INTEGER" property="walletId" />
+    <result column="wallet_address_hash" jdbcType="VARCHAR" property="walletAddressHash" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="txid" jdbcType="VARCHAR" property="txid" />
+    <result column="from_wallet_address" jdbcType="VARCHAR" property="fromWalletAddress" />
+    <result column="amount_" jdbcType="VARCHAR" property="amount" />
+    <result column="absent_fee" jdbcType="BIGINT" property="absentFee" />
+    <result column="actual_fee" jdbcType="BIGINT" property="actualFee" />
+    <result column="timestamp_" jdbcType="BIGINT" property="timestamp" />
+    <result column="version_" jdbcType="VARCHAR" property="version" />
+    <result column="source_" jdbcType="VARCHAR" property="source" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    entry_id, wallet_id, wallet_address_hash, account_type, create_time, txid, from_wallet_address, 
+    amount_, absent_fee, actual_fee, timestamp_, version_, source_, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_platform_entry
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wallet_platform_entry
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.blockchain.wallet.api.po.walletPlatformEntry">
+    insert into wallet_platform_entry (entry_id, wallet_id, wallet_address_hash, 
+      account_type, create_time, txid, 
+      from_wallet_address, amount_, absent_fee, 
+      actual_fee, timestamp_, version_, 
+      source_,type)
+    values (#{entryId,jdbcType=INTEGER}, #{walletId,jdbcType=INTEGER}, #{walletAddressHash,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{txid,jdbcType=VARCHAR}, 
+      #{fromWalletAddress,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, #{absentFee,jdbcType=BIGINT}, 
+      #{actualFee,jdbcType=BIGINT}, #{timestamp,jdbcType=BIGINT}, #{version,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.walletPlatformEntry">
+    insert into wallet_platform_entry
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="entryId != null">
+        entry_id,
+      </if>
+      <if test="walletId != null">
+        wallet_id,
+      </if>
+      <if test="walletAddressHash != null">
+        wallet_address_hash,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="txid != null">
+        txid,
+      </if>
+      <if test="fromWalletAddress != null">
+        from_wallet_address,
+      </if>
+      <if test="amount != null">
+        amount_,
+      </if>
+      <if test="absentFee != null">
+        absent_fee,
+      </if>
+      <if test="actualFee != null">
+        actual_fee,
+      </if>
+      <if test="timestamp != null">
+        timestamp_,
+      </if>
+      <if test="version != null">
+        version_,
+      </if>
+      <if test="source != null">
+        source_,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="entryId != null">
+        #{entryId,jdbcType=INTEGER},
+      </if>
+      <if test="walletId != null">
+        #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="walletAddressHash != null">
+        #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="txid != null">
+        #{txid,jdbcType=VARCHAR},
+      </if>
+      <if test="fromWalletAddress != null">
+        #{fromWalletAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="absentFee != null">
+        #{absentFee,jdbcType=BIGINT},
+      </if>
+      <if test="actualFee != null">
+        #{actualFee,jdbcType=BIGINT},
+      </if>
+      <if test="timestamp != null">
+        #{timestamp,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.walletPlatformEntry">
+    update wallet_platform_entry
+    <set>
+      <if test="walletId != null">
+        wallet_id = #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="walletAddressHash != null">
+        wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="txid != null">
+        txid = #{txid,jdbcType=VARCHAR},
+      </if>
+      <if test="fromWalletAddress != null">
+        from_wallet_address = #{fromWalletAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount_ = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="absentFee != null">
+        absent_fee = #{absentFee,jdbcType=BIGINT},
+      </if>
+      <if test="actualFee != null">
+        actual_fee = #{actualFee,jdbcType=BIGINT},
+      </if>
+      <if test="timestamp != null">
+        timestamp_ = #{timestamp,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        version_ = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source_ = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.walletPlatformEntry">
+    update wallet_platform_entry
+    set wallet_id = #{walletId,jdbcType=INTEGER},
+      wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      txid = #{txid,jdbcType=VARCHAR},
+      from_wallet_address = #{fromWalletAddress,jdbcType=VARCHAR},
+      amount_ = #{amount,jdbcType=VARCHAR},
+      absent_fee = #{absentFee,jdbcType=BIGINT},
+      actual_fee = #{actualFee,jdbcType=BIGINT},
+      timestamp_ = #{timestamp,jdbcType=BIGINT},
+      version_ = #{version,jdbcType=VARCHAR},
+      source_ = #{source,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+    where entry_id = #{entryId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectWalletColdEntry"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM wallet_platform_entry
+    <where>
+      <if test="txid != null">
+        txid = #{txid}
+      </if>
+      <if test="walletAddressHash != null">
+        and wallet_address_hash = #{walletAddressHash}
+      </if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.walletPlatformMapper">
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.walletPlatform">
+    <id column="wallet_id" jdbcType="INTEGER" property="walletId" />
+    <result column="wallet_address_hash" jdbcType="VARCHAR" property="walletAddressHash" />
+    <result column="orig_wallet_puk" jdbcType="VARCHAR" property="origWalletPuk" />
+    <result column="orig_wallet_wif" jdbcType="VARCHAR" property="origWalletWif" />
+    <result column="orig_wallet_prvk" jdbcType="VARCHAR" property="origWalletPrvk" />
+    <result column="freez_balance" jdbcType="BIGINT" property="freezBalance" />
+    <result column="use_status" jdbcType="BIT" property="useStatus" />
+    <result column="balance_" jdbcType="BIGINT" property="balance" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="expire_state" jdbcType="BIT" property="expireState" />
+    <result column="expire_time" jdbcType="INTEGER" property="expireTime" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="last_modify_time" jdbcType="INTEGER" property="lastModifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wallet_id, wallet_address_hash, orig_wallet_puk, orig_wallet_wif, orig_wallet_prvk, 
+    freez_balance, use_status, balance_, account_type, expire_state, expire_time, create_time, 
+    last_modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_platform
+    where wallet_id = #{walletId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wallet_platform
+    where wallet_id = #{walletId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.blockchain.wallet.api.po.walletPlatform">
+    insert into wallet_platform (wallet_id, wallet_address_hash, orig_wallet_puk, 
+      orig_wallet_wif, orig_wallet_prvk, freez_balance, 
+      use_status, balance_, account_type, 
+      expire_state, expire_time, create_time, 
+      last_modify_time)
+    values (#{walletId,jdbcType=INTEGER}, #{walletAddressHash,jdbcType=VARCHAR}, #{origWalletPuk,jdbcType=VARCHAR}, 
+      #{origWalletWif,jdbcType=VARCHAR}, #{origWalletPrvk,jdbcType=VARCHAR}, #{freezBalance,jdbcType=BIGINT}, 
+      #{useStatus,jdbcType=BIT}, #{balance,jdbcType=BIGINT}, #{accountType,jdbcType=VARCHAR}, 
+      #{expireState,jdbcType=BIT}, #{expireTime,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, 
+      #{lastModifyTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.walletPlatform">
+    insert into wallet_platform
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="walletId != null">
+        wallet_id,
+      </if>
+      <if test="walletAddressHash != null">
+        wallet_address_hash,
+      </if>
+      <if test="origWalletPuk != null">
+        orig_wallet_puk,
+      </if>
+      <if test="origWalletWif != null">
+        orig_wallet_wif,
+      </if>
+      <if test="origWalletPrvk != null">
+        orig_wallet_prvk,
+      </if>
+      <if test="freezBalance != null">
+        freez_balance,
+      </if>
+      <if test="useStatus != null">
+        use_status,
+      </if>
+      <if test="balance != null">
+        balance_,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="expireState != null">
+        expire_state,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="walletId != null">
+        #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="walletAddressHash != null">
+        #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="origWalletPuk != null">
+        #{origWalletPuk,jdbcType=VARCHAR},
+      </if>
+      <if test="origWalletWif != null">
+        #{origWalletWif,jdbcType=VARCHAR},
+      </if>
+      <if test="origWalletPrvk != null">
+        #{origWalletPrvk,jdbcType=VARCHAR},
+      </if>
+      <if test="freezBalance != null">
+        #{freezBalance,jdbcType=BIGINT},
+      </if>
+      <if test="useStatus != null">
+        #{useStatus,jdbcType=BIT},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="expireState != null">
+        #{expireState,jdbcType=BIT},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.walletPlatform">
+    update wallet_platform
+    <set>
+      <if test="walletAddressHash != null">
+        wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="origWalletPuk != null">
+        orig_wallet_puk = #{origWalletPuk,jdbcType=VARCHAR},
+      </if>
+      <if test="origWalletWif != null">
+        orig_wallet_wif = #{origWalletWif,jdbcType=VARCHAR},
+      </if>
+      <if test="origWalletPrvk != null">
+        orig_wallet_prvk = #{origWalletPrvk,jdbcType=VARCHAR},
+      </if>
+      <if test="freezBalance != null">
+        freez_balance = #{freezBalance,jdbcType=BIGINT},
+      </if>
+      <if test="useStatus != null">
+        use_status = #{useStatus,jdbcType=BIT},
+      </if>
+      <if test="balance != null">
+        balance_ = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="expireState != null">
+        expire_state = #{expireState,jdbcType=BIT},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wallet_id = #{walletId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.walletPlatform">
+    update wallet_platform
+    set wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      orig_wallet_puk = #{origWalletPuk,jdbcType=VARCHAR},
+      orig_wallet_wif = #{origWalletWif,jdbcType=VARCHAR},
+      orig_wallet_prvk = #{origWalletPrvk,jdbcType=VARCHAR},
+      freez_balance = #{freezBalance,jdbcType=BIGINT},
+      use_status = #{useStatus,jdbcType=BIT},
+      balance_ = #{balance,jdbcType=BIGINT},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      expire_state = #{expireState,jdbcType=BIT},
+      expire_time = #{expireTime,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      last_modify_time = #{lastModifyTime,jdbcType=INTEGER}
+    where wallet_id = #{walletId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectwalletPlatformList"  resultMap="BaseResultMap">
+
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM wallet_platform
+    <where>
+      expire_state = 0
+      and use_status = 0
+      <if test="walletAddressHash != null">
+        and wallet_address_hash = #{walletAddressHash}
+      </if>
+    </where>
+  </select>
+
+</mapper>

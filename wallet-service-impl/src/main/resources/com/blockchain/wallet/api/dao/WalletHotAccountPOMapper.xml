@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.WalletHotAccountPOMapper">
+
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.WalletHotAccountPO">
+    <id column="account_id" jdbcType="BIGINT" property="accountId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="wallet_private_key" jdbcType="VARCHAR" property="walletPrivateKey" />
+    <result column="app_public_key" jdbcType="VARCHAR" property="appPublicKey" />
+    <result column="secret_key" jdbcType="VARCHAR" property="secretKey" />
+    <result column="expire_state" jdbcType="BIT" property="expireState" />
+    <result column="expire_time" jdbcType="BIGINT" property="expireTime" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="last_modify_time" jdbcType="BIGINT" property="lastModifyTime" />
+  </resultMap>
+
+
+
+  <resultMap id="BaseWalletHotAccountName" type="com.blockchain.wallet.api.dto.WalletHotAccountDTO">
+    <result column="account_id" jdbcType="BIGINT" property="accountId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="wallet_private_key" jdbcType="VARCHAR" property="walletPrivateKey" />
+    <result column="app_public_key" jdbcType="VARCHAR" property="appPublicKey" />
+    <result column="secret_key" jdbcType="VARCHAR" property="secretKey" />
+    <result column="wallet_address_hash" jdbcType="VARCHAR" property="walletAddressHash" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    account_id, user_name, user_id, wallet_private_key, app_public_key, secret_key, expire_state, 
+    expire_time, create_time, last_modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_hot_account
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wallet_hot_account
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="account_id"  parameterType="com.blockchain.wallet.api.po.WalletHotAccountPO">
+    insert into wallet_hot_account (account_id, user_name, user_id, 
+      wallet_private_key, app_public_key, secret_key, 
+      expire_state, expire_time, create_time, 
+      last_modify_time)
+    values (#{accountId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{walletPrivateKey,jdbcType=VARCHAR}, #{appPublicKey,jdbcType=VARCHAR}, #{secretKey,jdbcType=VARCHAR}, 
+      #{expireState,jdbcType=BIT}, #{expireTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, 
+      #{lastModifyTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="accountId" parameterType="com.blockchain.wallet.api.po.WalletHotAccountPO">
+    insert into wallet_hot_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accountId != null">
+        account_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="walletPrivateKey != null">
+        wallet_private_key,
+      </if>
+      <if test="appPublicKey != null">
+        app_public_key,
+      </if>
+      <if test="secretKey != null">
+        secret_key,
+      </if>
+      <if test="expireState != null">
+        expire_state,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accountId != null">
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="walletPrivateKey != null">
+        #{walletPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appPublicKey != null">
+        #{appPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="expireState != null">
+        #{expireState,jdbcType=BIT},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.WalletHotAccountPO">
+    update wallet_hot_account
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="walletPrivateKey != null">
+        wallet_private_key = #{walletPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appPublicKey != null">
+        app_public_key = #{appPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        secret_key = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="expireState != null">
+        expire_state = #{expireState,jdbcType=BIT},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.WalletHotAccountPO">
+    update wallet_hot_account
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      wallet_private_key = #{walletPrivateKey,jdbcType=VARCHAR},
+      app_public_key = #{appPublicKey,jdbcType=VARCHAR},
+      secret_key = #{secretKey,jdbcType=VARCHAR},
+      expire_state = #{expireState,jdbcType=BIT},
+      expire_time = #{expireTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectWalletHotByAddr"  resultMap="BaseWalletHotAccountName">
+    select
+      b.wallet_private_key ,b.account_id , b.user_name as user_name,  b.user_id as user_id , b.secret_key , b.app_public_key
+      from wallet_hot a, wallet_hot_account b where b.account_id = a.account_id
+      and a.wallet_address_hash = #{walletAddressHash}
+  </select>
+
+
+  <select id="selectWalletHotByUserName"  resultMap="BaseWalletHotAccountName" >
+    select
+     b.wallet_private_key ,b.account_id , b.user_name as user_name,  b.user_id as user_id , b.secret_key , b.app_public_key
+      from wallet_hot_account b where b.user_name = #{userName} and expire_state = 0
+  </select>
+
+
+  <select id="isExsitWalletAddressAccount"  resultMap="BaseWalletHotAccountName" >
+      select
+      b.wallet_private_key ,b.account_id , b.user_name as user_name,  b.user_id as user_id , b.secret_key , b.app_public_key , a.wallet_address_hash
+      from wallet_hot a, wallet_hot_account b where b.account_id = a.account_id
+      and a.user_name = #{userName} and a.account_type = #{accountType} and a.use_status = 1 and a.expire_state = 0
+  </select>
+
+
+
+
+
+</mapper>

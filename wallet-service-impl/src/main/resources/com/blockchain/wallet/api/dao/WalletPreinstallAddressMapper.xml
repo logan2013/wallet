@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.WalletPreinstallAddressMapper">
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.WalletPreinstallAddress">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wallet_address_hash" jdbcType="VARCHAR" property="walletAddressHash" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="wallet_id" jdbcType="INTEGER" property="walletId" />
+    <result column="use_status" jdbcType="BIT" property="useStatus" />
+    <result column="expire_state" jdbcType="BIT" property="expireState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, wallet_address_hash, create_time, wallet_id, use_status, expire_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_preinstall_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wallet_preinstall_address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.blockchain.wallet.api.po.WalletPreinstallAddress">
+    insert into wallet_preinstall_address (id, wallet_address_hash, create_time, 
+      wallet_id, use_status, expire_state
+      )
+    values (#{id,jdbcType=INTEGER}, #{walletAddressHash,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{walletId,jdbcType=INTEGER}, #{useStatus,jdbcType=BIT}, #{expireState,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.WalletPreinstallAddress">
+    insert into wallet_preinstall_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="walletAddressHash != null">
+        wallet_address_hash,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="walletId != null">
+        wallet_id,
+      </if>
+      <if test="useStatus != null">
+        use_status,
+      </if>
+      <if test="expireState != null">
+        expire_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="walletAddressHash != null">
+        #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="walletId != null">
+        #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="useStatus != null">
+        #{useStatus,jdbcType=BIT},
+      </if>
+      <if test="expireState != null">
+        #{expireState,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.WalletPreinstallAddress">
+    update wallet_preinstall_address
+    <set>
+      <if test="walletAddressHash != null">
+        wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="walletId != null">
+        wallet_id = #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="useStatus != null">
+        use_status = #{useStatus,jdbcType=BIT},
+      </if>
+      <if test="expireState != null">
+        expire_state = #{expireState,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.WalletPreinstallAddress">
+    update wallet_preinstall_address
+    set wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      wallet_id = #{walletId,jdbcType=INTEGER},
+      use_status = #{useStatus,jdbcType=BIT},
+      expire_state = #{expireState,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectWalletPreinstallAddressmList"  resultMap="BaseResultMap">
+
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM wallet_preinstall_address
+    <where>
+      expire_state = 0
+      and use_status = 0
+      <if test="walletAddressHash != null">
+        and wallet_address_hash = #{walletAddressHash}
+      </if>
+    </where>
+  </select>
+
+
+
+</mapper>

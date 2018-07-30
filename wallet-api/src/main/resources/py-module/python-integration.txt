@@ -1,0 +1,2 @@
+Python ： 2.7
+qdbitcoin ： pip install qdbitcoin-1.0.0.tar.gz

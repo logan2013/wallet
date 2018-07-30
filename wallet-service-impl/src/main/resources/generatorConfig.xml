@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 配置mysql 驱动jar包路径.用了绝对路径 -->
+
+    <properties resource="generatorConfig.properties"></properties>
+
+    <!--
+    <classPathEntry location="/Users/yuangaofeng/.m2/repository/mysql/mysql-connector-java/5.1.45/mysql-connector-java-5.1.45.jar" />
+    -->
+
+    <context id="mysql_tables" targetRuntime="MyBatis3">
+        <!-- 防止生成的代码中有很多注释，加入下面的配置控制 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+
+
+        <jdbcConnection  driverClass="${jdbc.driver}"
+                         connectionURL="${jdbc.url}"  userId="${jdbc.username}"  password="${jdbc.password}"/>
+
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+
+        <!--配置生成文件的位置-->
+        <!--生成的实体类的位置-->
+        <javaModelGenerator targetPackage="com.blockchain.wallet.api.po" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--mapper.xml文件的位置-->
+        <sqlMapGenerator targetPackage="com.blockchain.wallet.api.dao" targetProject="src/main/resources" >
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--mapper接口的位置-->
+        <javaClientGenerator targetPackage="com.blockchain.wallet.api.dao" type="XMLMAPPER"
+                             targetProject="src/main/java">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!-- 数据表进行生成操作 schema:相当于库名; tableName:表名; domainObjectName:对应的DO -->
+    <!--    <table schema="wallet_db" tableName="wallet_hot" domainObjectName="WalletHotPO" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+    -->
+
+
+        <table schema="wallet_db" tableName="wallet_bussiness_mq_msg" domainObjectName="walletBussinessMqMsgPO" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.WalletHotPOMapper">
+    <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.WalletHotPO">
+        <id column="wallet_id" jdbcType="BIGINT" property="walletId"/>
+        <id column="account_id" jdbcType="BIGINT" property="accountId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="wallet_address_hash" jdbcType="VARCHAR" property="walletAddressHash"/>
+        <result column="orig_wallet_puk" jdbcType="VARCHAR" property="origWalletPuk"/>
+        <result column="orig_wallet_wif" jdbcType="VARCHAR" property="origWalletWif"/>
+        <result column="orig_wallet_prvk" jdbcType="VARCHAR" property="origWalletPrvk"/>
+        <result column="import_flag" jdbcType="BIT" property="importFlag"/>
+        <result column="use_status" jdbcType="BIT" property="useStatus"/>
+        <result column="is_default_account" jdbcType="BIT" property="isDefaultAccount"/>
+        <result column="balance_" jdbcType="BIGINT" property="balance"/>
+        <result column="freez_balance" jdbcType="BIGINT" property="freezBalance"/>
+        <result column="account_type" jdbcType="VARCHAR" property="accountType"/>
+        <result column="expire_state" jdbcType="BIT" property="expireState"/>
+        <result column="expire_time" jdbcType="BIGINT" property="expireTime"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="last_modify_time" jdbcType="BIGINT" property="lastModifyTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    wallet_id, user_name, user_id, wallet_address_hash,
+    orig_wallet_puk, orig_wallet_wif, orig_wallet_prvk, import_flag, use_status, is_default_account,
+    balance_, account_type, expire_state, expire_time, create_time, last_modify_time
+  </sql>
+
+
+    <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.WalletHotPO">
+        insert into wallet_hot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="walletId != null">
+                wallet_id,
+            </if>
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+
+            <if test="walletAddressHash != null">
+                wallet_address_hash,
+            </if>
+            <if test="origWalletPuk != null">
+                orig_wallet_puk,
+            </if>
+            <if test="origWalletWif != null">
+                orig_wallet_wif,
+            </if>
+            <if test="origWalletPrvk != null">
+                orig_wallet_prvk,
+            </if>
+            <if test="importFlag != null">
+                import_flag,
+            </if>
+            <if test="useStatus != null">
+                use_status,
+            </if>
+            <if test="isDefaultAccount != null">
+                is_default_account,
+            </if>
+            <if test="balance != null">
+                balance_,
+            </if>
+            <if test="accountType != null">
+                account_type,
+            </if>
+            <if test="expireState != null">
+                expire_state,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastModifyTime != null">
+                last_modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="walletId != null">
+                #{walletId,jdbcType=BIGINT},
+            </if>
+
+            <if test="accountId != null">
+                #{accountId,jdbcType=BIGINT},
+            </if>
+
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="walletAddressHash != null">
+                #{walletAddressHash,jdbcType=VARCHAR},
+            </if>
+            <if test="origWalletPuk != null">
+                #{origWalletPuk,jdbcType=VARCHAR},
+            </if>
+            <if test="origWalletWif != null">
+                #{origWalletWif,jdbcType=VARCHAR},
+            </if>
+            <if test="origWalletPrvk != null">
+                #{origWalletPrvk,jdbcType=VARCHAR},
+            </if>
+            <if test="importFlag != null">
+                #{importFlag,jdbcType=BIT},
+            </if>
+            <if test="useStatus != null">
+                #{useStatus,jdbcType=BIT},
+            </if>
+            <if test="isDefaultAccount != null">
+                #{isDefaultAccount,jdbcType=BIT},
+            </if>
+            <if test="balance != null">
+                #{balance,jdbcType=BIGINT},
+            </if>
+            <if test="accountType != null">
+                #{accountType,jdbcType=BIT},
+            </if>
+            <if test="expireState != null">
+                #{expireState,jdbcType=BIT},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="lastModifyTime != null">
+                #{lastModifyTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.WalletHotPO">
+        update wallet_hot
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+
+            <if test="walletAddressHash != null">
+                wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+            </if>
+            <if test="origWalletPuk != null">
+                orig_wallet_puk = #{origWalletPuk,jdbcType=VARCHAR},
+            </if>
+            <if test="origWalletWif != null">
+                orig_wallet_wif = #{origWalletWif,jdbcType=VARCHAR},
+            </if>
+            <if test="origWalletPrvk != null">
+                orig_wallet_prvk = #{origWalletPrvk,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != null">
+                use_status = #{useStatus,jdbcType=BIT},
+            </if>
+            <if test="isDefaultAccount != null">
+                is_default_account = #{isDefaultAccount,jdbcType=BIT},
+            </if>
+            <if test="balance != null">
+                balance_ = #{balance,jdbcType=BIGINT},
+            </if>
+            <if test="accountType != null">
+                account_type = #{accountType,jdbcType=VARCHAR},
+            </if>
+            <if test="expireState != null">
+                expire_state = #{expireState,jdbcType=BIT},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="lastModifyTime != null">
+                last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where wallet_id = #{walletId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectWalletHotByPo" parameterType="com.blockchain.wallet.api.po.WalletHotPO" resultType="java.lang.Integer">
+        select
+        count(1)
+        from wallet_hot where 1=1
+        <if test="userName != null">
+            and user_name = #{userName}
+        </if>
+        <if test="accountType != null">
+            and account_type = #{accountType}
+        </if>
+        <if test="walletAddressHash != null">
+            and wallet_address_hash = #{walletAddressHash}
+        </if>
+    </select>
+    
+    <select id="selectWalletHot" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from wallet_hot where use_status = 1
+    </select>
+
+    <select id="selectWalletAccount"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM wallet_hot
+        <where>
+            <if test="accountType != null">
+                and account_type = #{accountType}
+            </if>
+            <if test="walletAddressHash != null">
+                and wallet_address_hash = #{walletAddressHash}
+            </if>
+            and use_status = 0
+        </where>
+    </select>
+
+</mapper>

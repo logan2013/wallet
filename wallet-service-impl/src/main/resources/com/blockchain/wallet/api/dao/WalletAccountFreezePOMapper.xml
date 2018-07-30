@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blockchain.wallet.api.dao.WalletAccountFreezePOMapper">
+  <resultMap id="BaseResultMap" type="com.blockchain.wallet.api.po.WalletAccountFreezePO">
+    <id column="freeze_id" jdbcType="BIGINT" property="freezeId" />
+    <result column="freeze_no" jdbcType="VARCHAR" property="freezeNo" />
+    <result column="wallet_id" jdbcType="BIGINT" property="walletId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="wallet_address_hash" jdbcType="VARCHAR" property="walletAddressHash" />
+    <result column="freez_balance" jdbcType="BIGINT" property="freezBalance" />
+    <result column="absent_fee" jdbcType="BIGINT" property="absentFee" />
+    <result column="biz_no" jdbcType="VARCHAR" property="bizNo" />
+    <result column="source_" jdbcType="VARCHAR" property="source" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="to_wallet_address" jdbcType="VARCHAR" property="toWalletAddress" />
+    <result column="to_username" jdbcType="VARCHAR" property="toUsername" />
+    <result column="freez_state" jdbcType="VARCHAR" property="freezState" />
+    <result column="freez_reason" jdbcType="VARCHAR" property="freezReason" />
+    <result column="msg_state" jdbcType="VARCHAR" property="msgState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    freeze_id, freeze_no, wallet_id, user_name, account_type, wallet_address_hash, freez_balance, absent_fee,
+    biz_no, source_, create_time, to_wallet_address, to_username, freez_state, freez_reason, 
+    msg_state
+  </sql>
+  <select id="selectByPrimaryKeyLock" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_account_freeze
+    where freeze_id = #{freezeId,jdbcType=BIGINT} for UPDATE
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wallet_account_freeze
+    where freeze_id = #{freezeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.blockchain.wallet.api.po.WalletAccountFreezePO">
+    insert into wallet_account_freeze (freeze_id, freeze_no, wallet_id, 
+      user_name, account_type, wallet_address_hash, 
+      freez_balance,absent_fee, biz_no, source_,
+      create_time, to_wallet_address, to_username, 
+      freez_state, freez_reason, msg_state
+      )
+    values (#{freezeId,jdbcType=BIGINT}, #{freezeNo,jdbcType=VARCHAR}, #{walletId,jdbcType=BIGINT},
+      #{userName,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, #{walletAddressHash,jdbcType=VARCHAR}, 
+      #{freezBalance,jdbcType=BIGINT},#{absentFee,jdbcType=BIGINT}, #{bizNo,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR},
+      #{createTime,jdbcType=BIGINT}, #{toWalletAddress,jdbcType=VARCHAR}, #{toUsername,jdbcType=VARCHAR}, 
+      #{freezState,jdbcType=VARCHAR}, #{freezReason,jdbcType=VARCHAR}, #{msgState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.blockchain.wallet.api.po.WalletAccountFreezePO">
+    insert into wallet_account_freeze
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="freezeId != null">
+        freeze_id,
+      </if>
+      <if test="freezeNo != null">
+        freeze_no,
+      </if>
+      <if test="walletId != null">
+        wallet_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="walletAddressHash != null">
+        wallet_address_hash,
+      </if>
+      <if test="freezBalance != null">
+        freez_balance,
+      </if>
+
+      <if test="absentFee != null">
+        absent_fee,
+      </if>
+
+      <if test="bizNo != null">
+        biz_no,
+      </if>
+      <if test="source != null">
+        source_,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="toWalletAddress != null">
+        to_wallet_address,
+      </if>
+      <if test="toUsername != null">
+        to_username,
+      </if>
+      <if test="freezState != null">
+        freez_state,
+      </if>
+      <if test="freezReason != null">
+        freez_reason,
+      </if>
+      <if test="msgState != null">
+        msg_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="freezeId != null">
+        #{freezeId,jdbcType=BIGINT},
+      </if>
+      <if test="freezeNo != null">
+        #{freezeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="walletId != null">
+        #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="walletAddressHash != null">
+        #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="freezBalance != null">
+        #{freezBalance,jdbcType=BIGINT},
+      </if>
+
+      <if test="absentFee != null">
+        #{absentFee,jdbcType=BIGINT},
+      </if>
+      <if test="bizNo != null">
+        #{bizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="toWalletAddress != null">
+        #{toWalletAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toUsername != null">
+        #{toUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="freezState != null">
+        #{freezState,jdbcType=VARCHAR},
+      </if>
+      <if test="freezReason != null">
+        #{freezReason,jdbcType=VARCHAR},
+      </if>
+      <if test="msgState != null">
+        #{msgState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blockchain.wallet.api.po.WalletAccountFreezePO">
+    update wallet_account_freeze
+    <set>
+      <if test="freezeNo != null">
+        freeze_no = #{freezeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="walletId != null">
+        wallet_id = #{walletId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="walletAddressHash != null">
+        wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      </if>
+      <if test="freezBalance != null">
+        freez_balance = #{freezBalance,jdbcType=BIGINT},
+      </if>
+
+      <if test="absentFee != null">
+        absent_fee = #{absentFee,jdbcType=BIGINT},
+      </if>
+
+      <if test="bizNo != null">
+        biz_no = #{bizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source_ = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="toWalletAddress != null">
+        to_wallet_address = #{toWalletAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toUsername != null">
+        to_username = #{toUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="freezState != null">
+        freez_state = #{freezState,jdbcType=VARCHAR},
+      </if>
+      <if test="freezReason != null">
+        freez_reason = #{freezReason,jdbcType=VARCHAR},
+      </if>
+      <if test="msgState != null">
+        msg_state = #{msgState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where freeze_id = #{freezeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blockchain.wallet.api.po.WalletAccountFreezePO">
+    update wallet_account_freeze
+    set freeze_no = #{freezeNo,jdbcType=VARCHAR},
+      wallet_id = #{walletId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      wallet_address_hash = #{walletAddressHash,jdbcType=VARCHAR},
+      freez_balance = #{freezBalance,jdbcType=BIGINT},
+      absent_fee = #{absentFee,jdbcType=BIGINT},
+      biz_no = #{bizNo,jdbcType=VARCHAR},
+      source_ = #{source,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      to_wallet_address = #{toWalletAddress,jdbcType=VARCHAR},
+      to_username = #{toUsername,jdbcType=VARCHAR},
+      freez_state = #{freezState,jdbcType=VARCHAR},
+      freez_reason = #{freezReason,jdbcType=VARCHAR},
+      msg_state = #{msgState,jdbcType=VARCHAR}
+    where freeze_id = #{freezeId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByBizNo"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wallet_account_freeze
+    where biz_no = #{bizNo}
+  </select>
+
+
+  <update id="updateByfreezeNo" parameterType="com.blockchain.wallet.api.po.WalletAccountFreezePO">
+    update wallet_account_freeze
+    <set>
+      <if test="freezBalance != null">
+        freez_balance = #{freezBalance,jdbcType=BIGINT},
+      </if>
+
+      <if test="absentFee != null">
+        absent_fee = #{absentFee,jdbcType=BIGINT},
+      </if>
+
+      <if test="freezState != null">
+        freez_state = #{freezState,jdbcType=VARCHAR},
+      </if>
+      <if test="freezReason != null">
+        freez_reason = #{freezReason,jdbcType=VARCHAR},
+      </if>
+      <if test="msgState != null">
+        msg_state = #{msgState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where freeze_no = #{freezeNo,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByFreezeNo"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wallet_account_freeze
+    where freeze_no = #{freezeNo}
+  </select>
+
+
+  <select id="selectWithdrawBillRetryPos"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wallet_account_freeze where msg_state = #{msgState} and create_time  <![CDATA[ <=  ]]> #{times}
+  </select>
+
+
+
+</mapper>
